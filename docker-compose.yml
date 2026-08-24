@@ -1,0 +1,37 @@
+services:
+  telegram-bot:
+    build: .
+    container_name: telegram-ai-bot
+    env_file: .env
+    environment:
+      MEMORY_DB_PATH: /data/bot_memory.sqlite3
+      OPENROUTER_PROXY_URL: ${OPENROUTER_PROXY_URL:-}
+    volumes:
+      - bot-memory:/data
+      - voice-models:/models
+    restart: unless-stopped
+    init: true
+    depends_on:
+      - vpn
+    networks:
+      - default
+      - openrouter-private
+
+  vpn:
+    image: ghcr.io/xtls/xray-core:latest
+    command: ["run", "-config", "/etc/xray/config.json"]
+    volumes:
+      - ./vpn/config.json:/etc/xray/config.json:ro
+    restart: unless-stopped
+    networks:
+      - vpn-egress
+      - openrouter-private
+
+volumes:
+  bot-memory:
+  voice-models:
+
+networks:
+  vpn-egress:
+  openrouter-private:
+    internal: true

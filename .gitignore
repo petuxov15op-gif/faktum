@@ -1,0 +1,13 @@
+.env
+.env.example
+vpn-link.txt
+vpn/config.json
+n8n/
+*.log
+.bot-run.err
+data/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
