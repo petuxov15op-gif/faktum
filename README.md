@@ -1,79 +1,67 @@
-# Фактум — персональный AI-помощник для Telegram
+# Faktum: Personal Telegram AI Assistant
 
-Фактум — готовый Telegram-бот на Python и aiogram. Он общается с пользователем, ищет актуальную информацию с источниками, работает с голосовыми сообщениями, изображениями и документами, а также помогает с повседневными делами.
+Faktum is a Python Telegram bot built with aiogram. It can chat, search for up-to-date information with sources, process voice messages, images, and documents, and help with everyday planning.
 
-## Возможности
+## Features
 
-- обычный AI-диалог с сохранением контекста;
-- веб-поиск для новостей, погоды, цен, событий и других актуальных данных;
-- ответы со ссылками на найденные источники;
-- распознавание голосовых сообщений продолжительностью до трёх минут;
-- анализ фотографий, PDF, DOCX и текстовых файлов;
-- постоянные факты о пользователе;
-- задачи и напоминания, включая повторяющиеся;
-- учёт расходов за последние 30 дней;
-- персональный утренний и вечерний дайджест;
-- определение уровня английского и индивидуальные уроки;
-- ограничения запросов для защиты бюджета API.
+- Context-aware AI chat
+- Web search for news, weather, prices, events, and other current information
+- Source links in search-based answers
+- Voice transcription for messages up to three minutes
+- Image, PDF, DOCX, and text-file analysis
+- Persistent user facts and conversation history
+- Tasks, recurring reminders, and expense tracking
+- Personal morning and evening digests
+- English level assessment and personalized lessons
+- Per-user rate limits to control API usage
 
-## Интерфейс
+## Interface
 
-Команды `/start` и `/menu` открывают компактное inline-меню. Оно не заменяет клавиатуру телефона и не занимает место на экране.
+`/start` and `/menu` open a compact inline menu without replacing the phone keyboard.
 
-Разделы меню:
+The menu includes chat, planning, finance, learning, memory, and settings. Full deletion of user data requires a separate confirmation.
 
-- **Общение** — веб-поиск, дайджест и новый диалог;
-- **Дела** — задачи и напоминания;
-- **Финансы** — расходы и подбор покупок;
-- **Обучение** — тест, уроки и прогресс по английскому;
-- **Память** — сохранённые факты и управление данными;
-- **Настройки** — рассылки, город и проверка сервисов.
+## Commands
 
-Полное удаление пользовательских данных требует отдельного подтверждения.
-
-## Основные команды
-
-| Команда | Назначение |
+| Command | Purpose |
 | --- | --- |
-| `/start` | Приветствие и главное меню |
-| `/menu` | Открыть меню |
-| `/help` | Показать возможности |
-| `/search запрос` | Принудительный веб-поиск |
-| `/new` | Очистить историю текущего диалога |
-| `/memory` | Показать сохранённые факты |
-| `/remember текст` | Сохранить факт |
-| `/task текст` | Добавить дело |
-| `/tasks` | Показать открытые дела |
-| `/done номер` | Завершить дело |
-| `/remind время текст` | Создать напоминание |
-| `/reminders` | Показать напоминания |
-| `/expense сумма категория описание` | Записать расход |
-| `/expenses` | Показать расходы за 30 дней |
-| `/buy запрос` | Найти и сравнить товары |
-| `/digest` | Собрать персональный дайджест |
-| `/english` | Начать тест уровня английского |
-| `/lesson` | Начать следующий урок |
-| `/progress` | Показать прогресс |
-| `/settings` | Открыть настройки |
-| `/forget` | Удалить пользовательские данные после подтверждения |
+| `/start` | Start the bot and open the main menu |
+| `/menu` | Open the menu |
+| `/help` | Show available features |
+| `/search query` | Force a web search |
+| `/new` | Clear the current chat history |
+| `/memory` | Show saved facts |
+| `/remember text` | Save a fact |
+| `/task text` | Add a task |
+| `/tasks` | Show open tasks |
+| `/done number` | Complete a task |
+| `/remind time text` | Create a reminder |
+| `/reminders` | Show reminders |
+| `/expense amount category note` | Record an expense |
+| `/expenses` | Show expenses for the last 30 days |
+| `/buy query` | Find and compare products |
+| `/digest` | Create a personal digest |
+| `/english` | Start the English-level test |
+| `/lesson` | Start the next English lesson |
+| `/progress` | Show learning progress |
+| `/settings` | Open assistant settings |
+| `/forget` | Delete user data after confirmation |
 
-## Технологии
+## Technology
 
-- Python 3.12;
-- aiogram 3 и Telegram long polling;
-- Mistral и OpenRouter;
-- Tavily для веб-поиска;
-- SQLite с WAL для постоянной памяти;
-- faster-whisper для голосовых сообщений;
-- Docker Compose для развёртывания.
+- Python 3.12
+- aiogram 3 with Telegram long polling
+- Mistral and OpenRouter
+- Tavily for web search
+- SQLite with WAL for persistent storage
+- faster-whisper for voice transcription
+- Docker Compose for deployment
 
-## Настройка
+## Setup
 
-1. Скопируйте `env.example` в `.env`.
-2. Заполните секретные значения в `.env`.
-3. Не отправляйте `.env` третьим лицам и не добавляйте его в Git.
-
-Основные переменные:
+1. Copy `env.example` to `.env`.
+2. Add your own credentials to `.env`.
+3. Never share or commit `.env`.
 
 ```env
 TELEGRAM_BOT_TOKEN=
@@ -91,57 +79,36 @@ STRICT_FACT_MODE=true
 LOG_LEVEL=INFO
 ```
 
-## Локальный запуск
+## Local run
 
-На новом компьютере виртуальное окружение нужно создать заново:
+Use Python 3.12 or newer:
 
-```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-.\.venv\Scripts\python.exe bot.py
+python bot.py
 ```
 
-После установки можно запускать бот двойным кликом по `start_bot.cmd`.
-
-## Запуск через Docker
-
-Текущая Docker-конфигурация включает приватный VPN-sidecar для OpenRouter. Перед запуском подготовьте `vpn/config.json` по инструкции `vpn/README.md`. Этот файл содержит секретные данные и не должен попадать в Git или архив передачи.
+## Docker
 
 ```sh
 docker compose up -d --build
 docker compose logs --tail=50
 ```
 
-База пользователей хранится в named volume `bot-memory`. Не выполняйте `docker compose down -v`, если память должна сохраниться.
+User data is stored in the named Docker volume `bot-memory`. Do not run `docker compose down -v` unless you explicitly want to erase that data.
 
-## Обновление на Beget
+## GitHub sync
 
-Скрипт `update_beget.cmd` загружает текущие файлы и пересобирает контейнер на VPS. Запускайте его только после локальной проверки изменений.
-
-После обновления проверьте в Telegram:
-
-1. `/start` и переходы по всем разделам меню;
-2. обычный текстовый вопрос;
-3. `/search погода в Екатеринбурге сегодня`;
-4. добавление и просмотр задачи;
-5. создание напоминания;
-6. загрузку тестового документа или фотографии.
-
-## Синхронизация с GitHub
-
-После завершённой доработки запусти в Terminal из папки проекта:
+After completing a change, run:
 
 ```sh
-./sync_github.sh "Кратко: что изменено"
+bash sync_github.sh "Brief description of the change"
 ```
 
-Скрипт добавит неигнорируемые изменения, создаст коммит, подтянет актуальную ветку с GitHub и отправит результат. Он не публикует `.env`, VPN-конфигурацию, локальную базу или логи: эти пути указаны в `.gitignore`.
+The script stages non-ignored files, creates a commit, rebases on the remote branch, and pushes the result to GitHub. It does not publish `.env`, the VPN configuration, the local database, or logs. Configure GitHub authentication in your terminal before the first run.
 
-Для первого запуска Git должен быть авторизован в GitHub. Вход в браузере не даёт терминалу доступ автоматически: настрой один раз GitHub CLI или SSH-ключ, не добавляя токены в файлы проекта.
+## Privacy
 
-## Передача заказчику
-
-В передаваемый архив включаются исходники, Docker-конфигурация, документация и `env.example`. Не включаются `.env`, `.env.example` с локальными значениями, `.venv`, `__pycache__`, локальная база, старые логи и временные файлы.
-
-Пользовательские сообщения и сохранённые факты хранятся в SQLite и передаются выбранному AI-провайдеру для формирования ответов. Заказчику следует отразить это в политике конфиденциальности.
+User messages and saved facts are stored in SQLite and may be sent to the configured AI provider to generate replies. Reflect this in your privacy policy before distributing the bot.
